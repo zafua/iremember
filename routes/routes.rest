@@ -1,0 +1,11 @@
+GET http://localhost:3333/words
+
+###
+
+POST http://localhost:3333/words
+Content-Type:  application/json
+
+{
+    "word": "Hope",
+    "meaning": "Umut"
+}
