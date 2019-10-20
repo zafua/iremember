@@ -1,11 +1,39 @@
-GET http://localhost:3333/words
+GET http://localhost:3333/words/
 
 ###
+GET http://localhost:3333/words/5dac7566d61b95afee15915f
+###
+DELETE http://localhost:3333/words/5dacd9c09a5f9db235954080
+###
 
+PATCH http://localhost:3333/words/5dacd35dead106b19b2bed55
+Content-Type: application/json 
+
+{
+  "word": "victory"
+}
+###
+PATCH http://localhost:3333/words/5dacd35dead106b19b2bed55
+Content-Type: application/json 
+
+{
+  "meaning": "zafer"
+}
+###
+PATCH http://localhost:3333/words/5dacd35dead106b19b2bed55
+Content-Type: application/json 
+
+{
+  "word": "victory",
+  "meaning": "zafer"
+}
+###
 POST http://localhost:3333/words
 Content-Type:  application/json
 
 {
-    "word": "Hope",
-    "meaning": "Umut"
+    "word": "team",
+    "meaning": "takım"
 }
+
+###

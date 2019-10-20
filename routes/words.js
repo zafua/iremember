@@ -15,9 +15,9 @@ router.get('/',
     }
 );
 
-router.get('/:id',
+router.get('/:id', getWord,
     (request, response) => {
-
+        response.json(response.word);
     }
 );
 
@@ -40,17 +40,45 @@ router.post('/',
     }
 );
 
-router.patch('/:id', 
-    (request, response) => {
-
+router.patch('/:id', getWord,
+    async (request, response) => {
+        if(request.body.word){
+            response.word.word = request.body.word;
+        }
+        if(request.body.meaning){
+            response.word.meaning = request.body.meaning;
+        }
+        try {
+            const updatedWord = await response.word.save();
+            response.json(updatedWord);
+        } catch (error) {
+            response.status(400).json({message: error.message});
+        }
     }
 );
 
-router.delete('/:id',
-    (request, response) => {
-
+router.delete('/:id', getWord,
+    async (request, response) => {
+        try {
+            await response.word.remove();
+            response.json({message: 'Deleted ' + response.word.word + 'id: ' + request.params.id});
+        } catch (error) {
+            response.status(500).json({message: error.message});
+        }
     }
 );
 
+async function getWord(request, response, next){
+    try {
+        word = await Word.findById(request.params.id);
+        if(word == null)
+        return response.status(404).json({message: 'Kelime bulunamadı'});
+    } catch (error) {
+        return response.status(500).json({message: error.message});
+    }
+
+    response.word = word;
+    next();
+};
 
 module.exports = router;
